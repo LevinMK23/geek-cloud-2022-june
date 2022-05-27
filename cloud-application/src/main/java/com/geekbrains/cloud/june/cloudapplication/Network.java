@@ -16,12 +16,24 @@ public class Network {
         os = new DataOutputStream(socket.getOutputStream());
     }
 
-    public String readMessage() throws IOException {
+    public String readString() throws IOException {
         return is.readUTF();
+    }
+
+    public int readInt() throws IOException {
+        return is.readInt();
     }
 
     public void writeMessage(String message) throws IOException {
         os.writeUTF(message);
         os.flush();
+    }
+
+    public DataOutputStream getOs() {
+        return os;
+    }
+
+    public DataInputStream getIs() {
+        return is;
     }
 }

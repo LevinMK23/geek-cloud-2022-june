@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0"
-            prefWidth="253.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.geekbrains.cloud.june.cloudapplication.ChatController">
-    <TextField onAction="#sendMessage" fx:id="textView" layoutX="14.0" layoutY="367.0" prefHeight="29.0" prefWidth="226.0"/>
-    <ListView fx:id="listView" layoutX="14.0" layoutY="14.0" prefHeight="344.0" prefWidth="226.0"/>
-</AnchorPane>
+<VBox xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.geekbrains.cloud.june.cloudapplication.ChatController">
+   <HBox>
+      <ListView fx:id="clientView" prefHeight="344.0" prefWidth="226.0"/>
+      <ListView fx:id="serverView" prefHeight="344.0" prefWidth="226.0"/>
+   </HBox>
+   <HBox prefHeight="31.0" prefWidth="452.0">
+      <Button onAction="#upload" mnemonicParsing="false" prefHeight="33.0" prefWidth="69.0" text="To server"/>
+      <Button onAction="#download" mnemonicParsing="false" prefHeight="46.0" prefWidth="83.0" text="From server"/>
+   </HBox>
+</VBox>

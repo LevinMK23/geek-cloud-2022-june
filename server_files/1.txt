@@ -1,0 +1,24 @@
+Hello world!
+
+command (#list#(31), #file#(32), #file_request#(33))
+
+String proto
+1.
+#list#
+length
+names(length)
+
+2.
+#file#
+name
+size
+bytes(size)
+
+3.
+#file_request#
+name
+
+Byte proto
+31
+4b - length
+length * (4b name_len name_len byte)
