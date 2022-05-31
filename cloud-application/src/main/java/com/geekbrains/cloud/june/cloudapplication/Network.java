@@ -1,39 +1,29 @@
 package com.geekbrains.cloud.june.cloudapplication;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import com.geekbrains.cloud.CloudMessage;
+import io.netty.handler.codec.serialization.ObjectDecoderInputStream;
+import io.netty.handler.codec.serialization.ObjectEncoderOutputStream;
+
 import java.io.IOException;
 import java.net.Socket;
 
 public class Network {
 
-    private DataInputStream is;
-    private DataOutputStream os;
+    private ObjectDecoderInputStream is;
+    private ObjectEncoderOutputStream os;
 
     public Network(int port) throws IOException {
         Socket socket = new Socket("localhost", port);
-        is = new DataInputStream(socket.getInputStream());
-        os = new DataOutputStream(socket.getOutputStream());
+        os = new ObjectEncoderOutputStream(socket.getOutputStream());
+        is = new ObjectDecoderInputStream(socket.getInputStream());
     }
 
-    public String readString() throws IOException {
-        return is.readUTF();
+    public CloudMessage read() throws IOException, ClassNotFoundException {
+        return (CloudMessage) is.readObject();
     }
 
-    public int readInt() throws IOException {
-        return is.readInt();
-    }
-
-    public void writeMessage(String message) throws IOException {
-        os.writeUTF(message);
+    public void write(CloudMessage msg) throws IOException {
+        os.writeObject(msg);
         os.flush();
-    }
-
-    public DataOutputStream getOs() {
-        return os;
-    }
-
-    public DataInputStream getIs() {
-        return is;
     }
 }
