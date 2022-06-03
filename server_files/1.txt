@@ -1,24 +1,7 @@
-Hello world!
+Apple's VR headset is its most important product in years
+Apple (AAPL) will host its annual WWDC developers conference live from its Cupertino, California headquarters on June 6.
 
-command (#list#(31), #file#(32), #file_request#(33))
-
-String proto
-1.
-#list#
-length
-names(length)
-
-2.
-#file#
-name
-size
-bytes(size)
-
-3.
-#file_request#
-name
-
-Byte proto
-31
-4b - length
-length * (4b name_len name_len byte)
+While there are certain to be plenty of announcements and demos, including our first looks at iOS 16, watchOS 9, and the latest version of macOS, the most anticipated product might not even make an appearance: Apple’s virtual and augmented reality platform.
+Reportedly dubbed realityOS for reality operating system, the software would provide the foundation for Apple’s future VR and AR plans, not to mention give developers the opportunity to start building apps for the platform.
+Apple has a lot riding on its VR and AR products. The platform would serve as the company’s first major product launch since it debuted the Apple Watch in 2015, and entry into Silicon Valley’s latest obsession: the metaverse. More importantly, though, it could finally give Apple the iPhone successor it’s been chasing for years.
+But if the headset and its related software are flops out of the gate, it would deal a heavy blow to a broader VR industry looking toward Apple as the catalyst to launch the technology into the mainstream.

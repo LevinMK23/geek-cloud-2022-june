@@ -8,10 +8,15 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class NioServer {
+
+    private Path current = Path.of(System.getProperty("user.home"));
 
     private ServerSocketChannel server;
     private Selector selector;
@@ -62,13 +67,38 @@ public class NioServer {
             }
             buf.clear();
         }
-        s.append("-> ");
-        byte[] message = s.toString().getBytes(StandardCharsets.UTF_8);
-
-        for (SelectionKey selectedKey : selector.keys()) {
-            if (selectedKey.isValid() && selectedKey.channel() instanceof SocketChannel sc) {
-                sc.write(ByteBuffer.wrap(message));
+        String message = s.toString().trim();
+        if (message.startsWith("cd")) {
+            String[] args = message.split(" +");
+            if (args.length == 2) {
+                String dir = args[1];
+                Path target = current.resolve(dir);
+                if (Files.exists(target)) {
+                    if (Files.isDirectory(target)) {
+                        current = target;
+                        String response = "-> ";
+                        channel.write(ByteBuffer.wrap(response.getBytes(StandardCharsets.UTF_8)));
+                    } else {
+                        String response = "arg should be directory\n\r-> ";
+                        channel.write(ByteBuffer.wrap(response.getBytes(StandardCharsets.UTF_8)));
+                    }
+                } else {
+                    String response = "directory is not exist\n\r-> ";
+                    channel.write(ByteBuffer.wrap(response.getBytes(StandardCharsets.UTF_8)));
+                }
+            } else {
+                String response = "command cd should have only 1 argument\n\r-> ";
+                channel.write(ByteBuffer.wrap(response.getBytes(StandardCharsets.UTF_8)));
             }
+        } else if (message.equals("ls")) {
+            String files = Files.list(current)
+                    .map(Path::getFileName)
+                    .map(Path::toString)
+                    .collect(Collectors.joining("\n\r")) + "\n\r-> ";
+            channel.write(ByteBuffer.wrap(files.getBytes(StandardCharsets.UTF_8)));
+        } else {
+            String response = "Unknown command\n\r-> ";
+            channel.write(ByteBuffer.wrap(response.getBytes(StandardCharsets.UTF_8)));
         }
     }
 
